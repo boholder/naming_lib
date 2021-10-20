@@ -15,10 +15,22 @@ mod common;
 #[quickcheck]
 fn recognise_camel_case_as_hungarian_notation_and_others_as_invalid(s: String) -> TestResult {
     if is_not_valid_single_word(&s) {
-        TestResult::from_bool(
-            lib::from_hungarian_notation(&s) == NamingCase::Invalid(s)
-        )
+        // A randomly generated camel case string isn't a valid single word,
+        // but it will be confirmed as a valid hungarian notation
+        // which makes codes for invalid single words below failed.
+        //
+        // Let's discard these strings.
+        if lib::is_camel(&s) {
+            TestResult::discard()
+        } else {
+            TestResult::from_bool(
+                lib::from_hungarian_notation(&s) == NamingCase::Invalid(s)
+            )
+        }
     } else {
+
+        // We can use a valid single word to generate different format strings.
+        // That's why we detect randomly generated string's format first above.
         let judged_cases = build_all_format_str(s).iter()
             .map(|s| lib::from_hungarian_notation(&s))
             .collect::<Vec<NamingCase>>();
