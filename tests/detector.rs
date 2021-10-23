@@ -70,11 +70,11 @@ fn valid_strings_that_more_than_one_word_should_only_be_recognized_as_only_one_f
     let match_count = strs.iter()
         // for each format, generate 5 bool results.
         .map(|s|
-            [lib::is_screaming_snake(&s),
-                lib::is_snake(&s),
-                lib::is_kebab(&s),
-                lib::is_camel(&s),
-                lib::is_pascal(&s)])
+            [lib::is_screaming_snake(s),
+                lib::is_snake(s),
+                lib::is_kebab(s),
+                lib::is_camel(s),
+                lib::is_pascal(s)])
         .flatten()
         // count true value in total 25 results.
         .filter(|result| *result)
@@ -86,4 +86,20 @@ fn valid_strings_that_more_than_one_word_should_only_be_recognized_as_only_one_f
 #[quickcheck]
 fn string_remains_unchanged_after_being_wrapped_into_the_format(s: String) -> bool {
     s == lib::which_case(&s).to_string()
+}
+
+#[quickcheck]
+fn single_lower_case_words_can_be_recognized_as_three_format(word: String) -> TestResult {
+    if is_not_valid_single_word(&word) {
+        return TestResult::discard();
+    }
+
+    let word = word.to_ascii_lowercase();
+    let all_three_formats_match =
+        [lib::is_snake(&word),
+            lib::is_kebab(&word),
+            lib::is_camel(&word)].iter()
+            .filter(|result| **result).count();
+
+    TestResult::from_bool(all_three_formats_match == 3)
 }

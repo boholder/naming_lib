@@ -81,7 +81,8 @@ use crate::detector;
 /// will return an [Err](core::result::Result::Err).
 #[derive(PartialEq, Debug)]
 pub enum NamingCase {
-    /// A single word will be recognized as multiple formats,
+    /// A single word will be recognized as multiple formats
+    /// (snake, kebab, camel),
     /// so it belongs to a separate category.
     SingleWord(String),
     ScreamingSnake(String),
