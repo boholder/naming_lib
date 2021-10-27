@@ -116,6 +116,15 @@ impl NamingCase {
         detector::which_case(identifier)
     }
 
+    /// Check if this is an [Invalid](NamingCase::Invalid) instance.
+    pub fn is_invalid(&self) -> bool {
+        if let NamingCase::Invalid(_) = self {
+            true
+        } else {
+            false
+        }
+    }
+
     /// Convert the included string to screaming snake case.
     ///
     /// # Examples
