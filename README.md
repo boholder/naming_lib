@@ -10,4 +10,6 @@ It serves three purposes:
 
 3. Convert identifiers between different naming formats.
 
-For more info, check the [document](https://docs.rs/naming_lib/).
+For more info, check the [document](https://docs.rs/naming_lib/) on docs.rs.
+
+Use it by typing `cargo install naming_lib`.
