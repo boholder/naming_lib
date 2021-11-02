@@ -12,11 +12,13 @@ pub fn is_not_valid_single_word(word: &str) -> bool {
 }
 
 pub fn build_all_format_str(word: String) -> Vec<String> {
-    vec![build_screaming_snake_str(word.clone()),
-         build_snake_str(word.clone()),
-         build_kebab_str(word.clone()),
-         build_camel_str(word.clone()),
-         build_pascal_str(word)]
+    vec![
+        build_screaming_snake_str(word.clone()),
+        build_snake_str(word.clone()),
+        build_kebab_str(word.clone()),
+        build_camel_str(word.clone()),
+        build_pascal_str(word),
+    ]
 }
 
 pub fn build_screaming_snake_str(word: String) -> String {
@@ -33,7 +35,8 @@ pub fn build_kebab_str(word: String) -> String {
 
 pub fn build_camel_str(word: String) -> String {
     let head = word.clone();
-    head.to_ascii_lowercase() + &build_no_separator_str_from(to_first_uppercase(word))
+    head.to_ascii_lowercase()
+        + &build_no_separator_str_from(to_first_uppercase(word))
 }
 
 pub fn build_pascal_str(word: String) -> String {
@@ -57,7 +60,10 @@ pub fn build_no_separator_str_from(word: String) -> String {
     join_random_repeated_word_with_separator(word, "")
 }
 
-pub fn join_random_repeated_word_with_separator(word: String, sep: &str) -> String {
+pub fn join_random_repeated_word_with_separator(
+    word: String,
+    sep: &str,
+) -> String {
     let mut rng = rand::thread_rng();
     let word = word.add(sep);
     word.repeat(rng.gen_range(1..6)).strip_suffix(sep).unwrap().to_string()

@@ -16,5 +16,5 @@
 pub use detector::*;
 pub use naming_case::*;
 
-mod naming_case;
 mod detector;
+mod naming_case;

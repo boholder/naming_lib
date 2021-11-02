@@ -36,17 +36,17 @@ use crate::NamingCase;
 pub fn which_case(identifier: &str) -> NamingCase {
     // Any better idea to refactor this method?
     if is_single_word(identifier) {
-        return NamingCase::SingleWord(identifier.to_string());
+        NamingCase::SingleWord(identifier.to_string())
     } else if is_screaming_snake(identifier) {
-        return NamingCase::ScreamingSnake(identifier.to_string());
+        NamingCase::ScreamingSnake(identifier.to_string())
     } else if is_snake(identifier) {
-        return NamingCase::Snake(identifier.to_string());
+        NamingCase::Snake(identifier.to_string())
     } else if is_kebab(identifier) {
-        return NamingCase::Kebab(identifier.to_string());
+        NamingCase::Kebab(identifier.to_string())
     } else if is_camel(identifier) {
-        return NamingCase::Camel(identifier.to_string());
+        NamingCase::Camel(identifier.to_string())
     } else if is_pascal(identifier) {
-        return NamingCase::Pascal(identifier.to_string());
+        NamingCase::Pascal(identifier.to_string())
     } else {
         NamingCase::Invalid(identifier.to_string())
     }
@@ -70,8 +70,9 @@ pub fn which_case(identifier: &str) -> NamingCase {
 /// ```
 pub fn is_single_word(word: &str) -> bool {
     lazy_static! {
-            static ref SINGLE_WORD_REGEX:Regex=Regex::new(r"^(?:[a-z]+|[A-Z]+|[A-Z][a-z]+)\d*$").unwrap();
-        }
+        static ref SINGLE_WORD_REGEX: Regex =
+            Regex::new(r"^(?:[a-z]+|[A-Z]+|[A-Z][a-z]+)\d*$").unwrap();
+    }
     SINGLE_WORD_REGEX.is_match(word)
 }
 
@@ -88,7 +89,8 @@ pub fn is_single_word(word: &str) -> bool {
 /// ```
 pub fn is_screaming_snake(identifier: &str) -> bool {
     lazy_static! {
-        static ref SCREAMING_SNAKE_REGEX: Regex = Regex::new(r"^[A-Z]+\d*(_[A-Z]+\d*)*$").unwrap();
+        static ref SCREAMING_SNAKE_REGEX: Regex =
+            Regex::new(r"^[A-Z]+\d*(_[A-Z]+\d*)*$").unwrap();
     }
     SCREAMING_SNAKE_REGEX.is_match(identifier)
 }
@@ -106,7 +108,8 @@ pub fn is_screaming_snake(identifier: &str) -> bool {
 /// ```
 pub fn is_snake(identifier: &str) -> bool {
     lazy_static! {
-        static ref SNAKE_REGEX: Regex = Regex::new(r"^[a-z]+\d*(_[a-z]+\d*)*$").unwrap();
+        static ref SNAKE_REGEX: Regex =
+            Regex::new(r"^[a-z]+\d*(_[a-z]+\d*)*$").unwrap();
     }
     SNAKE_REGEX.is_match(identifier)
 }
@@ -124,7 +127,8 @@ pub fn is_snake(identifier: &str) -> bool {
 /// ```
 pub fn is_kebab(identifier: &str) -> bool {
     lazy_static! {
-        static ref KEBAB_REGEX: Regex = Regex::new(r"^[a-z]+\d*(-[a-z]+\d*)*$").unwrap();
+        static ref KEBAB_REGEX: Regex =
+            Regex::new(r"^[a-z]+\d*(-[a-z]+\d*)*$").unwrap();
     }
     KEBAB_REGEX.is_match(identifier)
 }
@@ -142,7 +146,8 @@ pub fn is_kebab(identifier: &str) -> bool {
 /// ```
 pub fn is_camel(identifier: &str) -> bool {
     lazy_static! {
-        static ref CAMEL_REGEX: Regex = Regex::new(r"^[a-z]+\d*([A-Z][a-z]*\d*)*$").unwrap();
+        static ref CAMEL_REGEX: Regex =
+            Regex::new(r"^[a-z]+\d*([A-Z][a-z]*\d*)*$").unwrap();
     }
     CAMEL_REGEX.is_match(identifier)
 }
@@ -160,7 +165,8 @@ pub fn is_camel(identifier: &str) -> bool {
 /// ```
 pub fn is_pascal(identifier: &str) -> bool {
     lazy_static! {
-        static ref PASCAL_REGEX: Regex = Regex::new(r"^([A-Z][a-z]*\d*)+$").unwrap();
+        static ref PASCAL_REGEX: Regex =
+            Regex::new(r"^([A-Z][a-z]*\d*)+$").unwrap();
     }
     PASCAL_REGEX.is_match(identifier)
 }
