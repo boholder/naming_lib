@@ -66,7 +66,7 @@ fn valid_strings_that_more_than_one_word_should_only_be_recognized_as_only_one_f
     // If any of 5 strings is a single word, we'll discard this test case.
     if strs
         .iter()
-        .map(|s| lib::is_single_word(&s))
+        .map(|s| lib::is_single_word(s))
         .reduce(|a, b| a || b)
         .unwrap()
     {

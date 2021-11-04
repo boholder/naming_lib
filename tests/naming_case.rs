@@ -34,31 +34,18 @@ fn recognise_camel_case_as_hungarian_notation_and_others_as_invalid(
         // That's why we detect randomly generated string's format first above.
         let judged_cases = build_all_format_str(s)
             .iter()
-            .map(|s| lib::from_hungarian_notation(&s))
+            .map(|s| lib::from_hungarian_notation(s))
             .collect::<Vec<NamingCase>>();
 
         // Can't directly use "NamingCase::Pascal == case"
-        let pascal_count =
-            judged_cases
-                .iter()
-                .filter(|case| {
-                    if let NamingCase::Pascal(_) = case {
-                        true
-                    } else {
-                        false
-                    }
-                })
-                .count();
+        let pascal_count = judged_cases
+            .iter()
+            .filter(|case| matches!(case, NamingCase::Pascal(_)))
+            .count();
 
         let invalid_count = judged_cases
             .iter()
-            .filter(|case| {
-                if let NamingCase::Invalid(_) = case {
-                    true
-                } else {
-                    false
-                }
-            })
+            .filter(|case| matches!(case, NamingCase::Invalid(_)))
             .count();
 
         TestResult::from_bool(pascal_count == 1 && invalid_count == 4)
@@ -68,31 +55,31 @@ fn recognise_camel_case_as_hungarian_notation_and_others_as_invalid(
 #[quickcheck]
 fn correctly_convert_to_screaming_snake_case(word: String) -> TestResult {
     let builder = |s: &str| lib::from(s).to_screaming_snake();
-    convert_test_helper(word.clone(), lib::is_screaming_snake, builder)
+    convert_test_helper(word, lib::is_screaming_snake, builder)
 }
 
 #[quickcheck]
 fn correctly_convert_to_snake_case(word: String) -> TestResult {
     let builder = |s: &str| lib::from(s).to_snake();
-    convert_test_helper(word.clone(), lib::is_snake, builder)
+    convert_test_helper(word, lib::is_snake, builder)
 }
 
 #[quickcheck]
 fn correctly_convert_to_kebab_case(word: String) -> TestResult {
     let builder = |s: &str| lib::from(s).to_kebab();
-    convert_test_helper(word.clone(), lib::is_kebab, builder)
+    convert_test_helper(word, lib::is_kebab, builder)
 }
 
 #[quickcheck]
 fn correctly_convert_to_camel_case(word: String) -> TestResult {
     let builder = |s: &str| lib::from(s).to_camel();
-    convert_test_helper(word.clone(), lib::is_camel, builder)
+    convert_test_helper(word, lib::is_camel, builder)
 }
 
 #[quickcheck]
 fn correctly_convert_to_pascal_case(word: String) -> TestResult {
     let builder = |s: &str| lib::from(s).to_pascal();
-    convert_test_helper(word.clone(), lib::is_pascal, builder)
+    convert_test_helper(word, lib::is_pascal, builder)
 }
 
 fn convert_test_helper(
